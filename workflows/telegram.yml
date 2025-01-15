@@ -10,7 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send message to Telegram
+        id: send_telegram
         run: |
-          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
+          response=$(curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
           -d "chat_id=${{ secrets.CHAT_ID }}" \
-          -d "text=${{ github.event.client_payload.message }}"
+          -d "text=${{ github.event.client_payload.message }}" \
+          -s -o response.json -w "%{http_code}")
+          echo "HTTP Response Code: $response"
+          echo "Response Content:"
+          cat response.json
