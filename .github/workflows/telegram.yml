@@ -3,7 +3,7 @@ name: Send Telegram Message
 on:
   repository_dispatch:
     types:
-      - api_hit
+      - api_hit_coba
 
 jobs:
   send_message:
